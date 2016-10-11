@@ -22,6 +22,19 @@
 
 </head>
 <body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Mileage Tracker</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li class="active"><a href="mileageform">Enter Mileage</a></li>
+      <li><a href="listmiles">View Mileage</a></li> 
+      <li><a href="logout">Log Out</a></li> 
+    </ul>
+  </div>
+</nav>
+<br /><br />
 <div class="container">
 	<h1 style="text-align: center">Update Mileage:</h1>
 	<form:form method="post" modelAttribute="mileage" action="updatemiles">

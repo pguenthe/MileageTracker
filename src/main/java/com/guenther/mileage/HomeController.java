@@ -76,7 +76,9 @@ public class HomeController {
 		try {
 			dbUser = DAO.checkUser(user.getEmail(), user.getPassword());
 		} catch (Exception e) {
-//			System.out.println("DEBUG: db threw single result exception");
+			System.out.println("DEBUG: db threw exception "
+					+ e);
+			e.printStackTrace();
 			model.addAttribute("greeting", "Account Error");
 			return "home";
 		}
@@ -188,5 +190,16 @@ public class HomeController {
 		
 		model.addAttribute("title", "Mileage");
 		return ("listmiles");
+	}
+	@RequestMapping (value="/logout", method = RequestMethod.GET)
+	public String logout(@CookieValue("userid") Cookie uid, Model model,
+			HttpServletResponse response ){
+		uid.setMaxAge(0);
+		response.addCookie(uid);
+		
+		User user = new User();
+		model.addAttribute("user", user);
+		model.addAttribute("greeting", "You are now logged out.");
+		return ("home");
 	}
 }

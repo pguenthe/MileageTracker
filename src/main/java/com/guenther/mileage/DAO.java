@@ -177,7 +177,7 @@ public class DAO {
 	}
 
 	public static User checkUser(String email, String password) {
-//		System.out.println("DEBUG: check password=" + password);
+		System.out.println("DEBUG: check password=" + password);
 
 		if (factory == null)
 			setupFactory();
@@ -204,10 +204,10 @@ public class DAO {
 
 		 StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
 		 if (passwordEncryptor.checkPassword(password, user.getPassword())) {
-//			 System.out.println("DEBUG: Password passed");
+			 System.out.println("DEBUG: Password passed");
 			 return user; 
 		 } else {
-//			 System.out.println("DEBUG: Password failed against encrypted");
+			 System.out.println("DEBUG: Password failed against encrypted");
 			 return null;
 		 }
 	}

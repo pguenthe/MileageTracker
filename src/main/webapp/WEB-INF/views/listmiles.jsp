@@ -75,6 +75,19 @@ td.center {
 </style>
 </head>
 <body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Mileage Tracker</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="mileageform">Enter Mileage</a></li>
+      <li class="active"><a href="listmiles">View Mileage</a></li> 
+      <li><a href="logout">Log Out</a></li> 
+    </ul>
+  </div>
+</nav>
+<br /><br />
 <div class="container">
   	<div class="row">
   		<div class="col-xs-12" style="text-align: center">
