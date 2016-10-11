@@ -183,22 +183,33 @@ public class DAO {
 			setupFactory();
 		 Session hibernateSession = factory.openSession();
 		 
+		 //prepared statement to protect against injection
 		 Query<User> sql = hibernateSession.createQuery("FROM User WHERE email=:email", User.class) ;
 		 sql.setParameter("email", email);
 		 User user = sql.getSingleResult(); 
 		
-		 hibernateSession.getTransaction().commit();
-		 hibernateSession.close();  
+//		 if (user == null) {
+//			 System.out.println("DEBUG: user returned null");
+//		 } else 
+//			 System.out.println("DEBUG: user returned = " 
+//				 + user.getEmail() + "/" + user.getFirstname());
+//		 }
 		 
+		 try {
+//			 hibernateSession.getTransaction().commit();
+			 hibernateSession.close();  
+		 } catch (Exception e) {
+			 System.out.println("DEBUG: Error caught: " + e);
+		 }
+
 		 StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
 		 if (passwordEncryptor.checkPassword(password, user.getPassword())) {
+//			 System.out.println("DEBUG: Password passed");
 			 return user; 
 		 } else {
 //			 System.out.println("DEBUG: Password failed against encrypted");
 			 return null;
 		 }
-		 
-		  
 	}
 
 //	public static User getUser(String email) {
