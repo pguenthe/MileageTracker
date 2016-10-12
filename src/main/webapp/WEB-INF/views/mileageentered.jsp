@@ -20,7 +20,11 @@
 		text-align: center;
 	}
 </style>
-
+<script> 
+     function logout() {
+    	 	window.location.href="logout";
+     }
+    </script>
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -31,7 +35,7 @@
     <ul class="nav navbar-nav navbar-right">
       <li><a href="mileageform">Enter Mileage</a></li>
       <li><a href="listmiles">View Mileage</a></li> 
-      <li><a href="logout">Log Out</a></li> 
+      <li><a href="#" data-toggle="modal" data-target="#logout" >Log Out</a></li> 
     </ul>
   </div>
 </nav>
@@ -69,5 +73,26 @@
 			<br />
 		</div>
 	</div></div>
+	
+	  <!-- Modal -->
+  <div class="modal fade" id="logout" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Confirm Logout</h4>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to log out?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" 
+          	onclick="logout()">Yes</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+	
 </body>
 </html>
