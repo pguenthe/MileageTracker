@@ -20,8 +20,17 @@
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
+<script>
+	function setDefaultDate() {
+		var today = new Date();
+		var todayStr = today.getFullYear() + "-"
+			+ (today.getMonth() + 1) + "-"
+			+ today.getDate();
+		document.getElementById('date').value = todayStr;
+	}
+</script>
 </head>
-<body>
+<body onload="setDefaultDate()">
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -41,7 +50,7 @@
 		<form:input path="userid" type="hidden" /> 
 		
 		<form:label path="date">Date:</form:label>
-		<form:input path="date" type="date" class="form-control" /> 
+		<form:input path="date" type="date" id="date" class="form-control" /> 
 		<form:errors path="date" />
 		<br />
 		

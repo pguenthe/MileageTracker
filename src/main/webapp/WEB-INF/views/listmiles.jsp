@@ -37,7 +37,7 @@
               ]);
 
             var options = {
-              title: 'Fuel Ecomony',
+              title: 'Fuel Economy',
               //curveType: 'function',
               legend: { position: 'bottom' },
         			vAxis: { 
