@@ -137,9 +137,18 @@ public class DAO {
          // Commit transaction
          hibernateSession.getTransaction().commit();
         	 hibernateSession.close();  
-
-        	 //calculate MPG
+        	 if (mRecords.size() == 0)
+        		 return null;
+        	 
+        	 //calculate MPG & averages
         	 //start at 1; ignore first record
+        	 MileageRecord averages = new MileageRecord();
+        	 double sumMiles = 0;
+        	 double sumGallons = mRecords.get(0).getGallons();
+        	 double sumMPG = 0;
+        	 double sumPrice = mRecords.get(0).getPrice();
+        	 double sumTotal = mRecords.get(0).getTotal();
+        	 
         	 for (int i = 1; i < mRecords.size(); i++) {
         		 double oldMiles = mRecords.get(i - 1).getMileage();
         		 double newMiles = mRecords.get(i).getMileage();
@@ -151,10 +160,34 @@ public class DAO {
         			 mRecords.get(i).setMpg(0);
         		 else
         			 mRecords.get(i).setMpg(mpg);
+        		 
+        		 sumMiles += distance;
+        		 sumGallons += gallons;
+        		 sumMPG += mpg;
+        		 sumPrice += mRecords.get(i).getPrice();
+        		 sumTotal += mRecords.get(i).getTotal();
         	 }
+        	 
+        	 //mileage and MPG don't apply for 1st record, so n is 1 smaller
+        	 averages.setMileage (roundTo2(sumMiles/(mRecords.size() - 1)));
+        	 averages.setMpg(roundTo2(sumMPG/(mRecords.size() - 1)));
+        	 
+        	 averages.setPrice(roundTo2(sumPrice/mRecords.size()));
+        	 averages.setGallons(roundTo2(sumGallons/mRecords.size()));
+        	 averages.setTotal(roundTo2(sumTotal/mRecords.size()));
+        	 
+        	 //set dummy record in list to represent averages
+        	 mRecords.add(averages);
+        	 
  		return mRecords;
 	}
 
+	private static double roundTo2 (double d) {
+		int temp = (int) (d * 100 + .5);
+		d = temp/100.0;
+		return d;
+	}
+	
 	public static int addUser(User u) {
 //		System.out.println("DEBUG: create user, password=" + u.getPassword());
 		StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();

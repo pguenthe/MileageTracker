@@ -53,6 +53,10 @@ public class HomeController {
     			return "home";
 		} 
 		int userid = DAO.addUser(user);
+		
+		model.addAttribute("instructions", "Please enter some mileage to get started.");
+		model.addAttribute("averages", null);
+		
 		model.addAttribute("userid", ""+userid);
 		model.addAttribute("username", user.getFirstname());
 		model.addAttribute("greeting", "Welcome, ");
@@ -89,6 +93,14 @@ public class HomeController {
 			return "home";
 		}
 		
+		List <MileageRecord> mileList = DAO.getRecords(dbUser.getId());
+		MileageRecord averages = null;
+		if (mileList != null){
+			averages = mileList.get(mileList.size() - 1);
+		} else {
+			model.addAttribute("instructions", "Please enter some mileage to get started.");
+		}
+		model.addAttribute("averages", averages);
 		model.addAttribute("userid", "" + dbUser.getId());
 		model.addAttribute("username", dbUser.getFirstname());
 		model.addAttribute("greeting", "Welcome Back, ");
@@ -128,6 +140,10 @@ public class HomeController {
 	public void milelistHelper (int userid, Model model) {
 		List <MileageRecord> mileList = DAO.getRecords(userid);
 		
+		//last record is dummy holding averages; pull and delete
+		MileageRecord averages = mileList.get(mileList.size() - 1);
+		mileList.remove(mileList.size()-1);
+		
 		//find high and low for Google chart
 		double max = 0;
 		double min = 1000;
@@ -145,6 +161,7 @@ public class HomeController {
 		max = max + .5;
 		min = min - .5;
 		
+		model.addAttribute("averages", averages);
 		model.addAttribute("chartMax", max);
 		model.addAttribute("chartMin", min);
 		model.addAttribute("mileList", mileList);

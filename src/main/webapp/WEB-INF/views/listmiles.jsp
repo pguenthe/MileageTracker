@@ -52,6 +52,14 @@
             chart.draw(data, options);
           }
       }
+      
+      var targetRecord = null;
+      
+     function deleteRecord() {
+    	 	if (targetRecord != null) {
+    	 		document.getElementById("form" + targetRecord).submit();
+    	 	}
+     }
     </script>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -123,19 +131,33 @@ td.center {
 						</form>
 					</td>
 					<td class="center">
-						<form action="mileagedelete" method="post">
+ 						<form action="mileagedelete" method="post" id="form${row.id }">
 							<input type="hidden" name="record" value="${row.id }">
-							<button type="submit" class="btn btn-primary">Delete</button>
+							<!-- <button type="submit" class="btn btn-primary">Delete</button>  -->
 						</form>
+						<button class="btn btn-primary"  
+								data-toggle="modal" data-target="#confirm" 
+								onClick="targetRecord=${row.id}">Delete</button>
 					</td>
 				</tr>
 				</c:forEach>
 				<tr>
-				<td colspan="8" style="text-align:center">
-				<form action="mileageform" method="get">
-					<button type="submit" class="btn btn-primary">Enter More Mileage</button>
-				</form>
-				</td>
+					<td style="font-weight:bold">Average</td>
+					<td style="text-align:right;font-weight:bold"><c:out value="${averages.mileage}" /></td>
+					<td style="text-align:right;font-weight:bold"><c:out value="${averages.price}" /></td>
+					<td style="text-align:right;font-weight:bold"><c:out value="${averages.gallons}" /></td>
+					<td style="text-align:right;font-weight:bold"><c:out value="${averages.total}" /></td>
+					<td style="text-align:right;font-weight:bold"><c:out value="${averages.mpg}" /></td>
+					<td></td>
+					<td></td>	
+				</tr>
+				<tr>
+					<td colspan="8" style="text-align:center">
+						<form action="mileageform" method="get">
+							<button type="submit" class="btn btn-primary">Enter More Mileage</button>
+						</form>
+					</td>
+				</tr>
 			</table>
 		</div>
 		<div class="col-md-6">
@@ -143,6 +165,27 @@ td.center {
 			style="width: 500px; height: 350px; display: inline-block; margin: 0 auto"></div>
 		</div>
 	</div>
+</div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="confirm" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Confirm Deletion</h4>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" 
+          	onclick="deleteRecord()">Yes</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 </body>
 </html>
